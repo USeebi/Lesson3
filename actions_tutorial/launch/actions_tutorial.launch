@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <launch> 
-  <param name="robot_description" textfile="$(find mastering_ros_robot_description_pkg)/urdf/pan_tilt.urdf" />
+
+  <arg name="server_node" value="pantilt_action_server" />
+  <param name="robot_description" textfile="$(find mastering_ros_robot_description_pkg)/urdf/robot_arm.urdf" />
 
   <node
     pkg="actions_tutorial"
@@ -15,6 +17,11 @@
     pkg="robot_state_publisher"
     type="robot_state_publisher"
   />
+
+  <node name="axclient_node" pkg="actionlib_tools"
+        type="axclient.py" args="/$(arg server_node)" output="screen" />
+
+  <include file="$(find tarkbot_robot)/launch/robot.launch"/>
 
   <!-- Launch visualization in rviz -->
   <node

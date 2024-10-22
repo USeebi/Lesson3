@@ -156,7 +156,7 @@ Visualization Manager:
           Value: false
         wrist_roll_link:
           Value: false
-      Marker Scale: 1
+      Marker Scale: 0.3
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -184,7 +184,7 @@ Visualization Manager:
   Global Options:
     Background Color: 122; 122; 122
     Default Light: true
-    Fixed Frame: base_link
+    Fixed Frame: craw_servo
     Frame Rate: 30
   Name: root
   Tools:

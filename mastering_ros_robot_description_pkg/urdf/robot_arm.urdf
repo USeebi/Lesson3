@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="robot_arm">
+    <link name="arm_servo">
+        <inertial>
+            <origin xyz="-0.00520521192565182 0.01111926696798689 0.026115517882718323" rpy="0.0 -0.0 -1.3552527156068805e-20" />
+            <mass value="0.3408048932817414" />
+            <inertia ixx="0.00011993359739119503" iyy="7.024887882209169e-05" izz="8.655825815887205e-05" ixy="-3.309132080748022e-06" iyz="-1.9472936187881763e-06" ixz="7.298408347366714e-06" />
+        </inertial>
+        <visual name="arm_servo_visual">
+            <origin xyz="0.0030139935324325065 0.009914743119193346 0.02727695015411946" rpy="3.139716897189504 1.301820786777512 -0.001812476256788611" />
+            <geometry>
+                <mesh filename="package://mastering_ros_robot_description_pkg/meshes/arm_servo.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+        <collision name="arm_servo_collision">
+            <origin xyz="0.0030139935324325065 0.009914743119193346 0.02727695015411946" rpy="3.139716897189504 1.301820786777512 -0.001812476256788611" />
+            <geometry>
+                <mesh filename="package://mastering_ros_robot_description_pkg/meshes/arm_servo.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="craw_servo">
+        <inertial>
+            <origin xyz="0.009444604838704768 0.026285755863166095 0.008589752272914312" rpy="0.0 0.0 0.0" />
+            <mass value="0.41080190821281926" />
+            <inertia ixx="0.0001679426909527112" iyy="0.00020289327856063224" izz="0.00017534608932282878" ixy="-1.1289757719020539e-06" iyz="1.2103504651081886e-06" ixz="3.2419682804361014e-06" />
+        </inertial>
+        <visual name="craw_servo_visual">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="package://mastering_ros_robot_description_pkg/meshes/craw_servo.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+        <collision name="craw_servo_collision">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="package://mastering_ros_robot_description_pkg/meshes/craw_servo.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="craw2">
+        <inertial>
+            <origin xyz="-0.024981792043481922 0.01714963347253345 -0.03984953908574084" rpy="0.0 -0.0 0.0" />
+            <mass value="0.14361180492178632" />
+            <inertia ixx="0.0001339378063570633" iyy="0.00019038338694415784" izz="9.559028145015788e-05" ixy="1.006294335493931e-06" iyz="7.655613038930024e-06" ixz="1.233772048752626e-06" />
+        </inertial>
+        <visual name="craw2_visual">
+            <origin xyz="-0.05570077229633004 0.027913294729427385 -0.05388566987136335" rpy="-2.1133992857034114 1.1995612836379621e-15 -0.025712251195341373" />
+            <geometry>
+                <mesh filename="package://mastering_ros_robot_description_pkg/meshes/craw2.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+        <collision name="craw2_collision">
+            <origin xyz="-0.05570077229633004 0.027913294729427385 -0.05388566987136335" rpy="-2.1133992857034114 1.1995612836379621e-15 -0.025712251195341373" />
+            <geometry>
+                <mesh filename="package://mastering_ros_robot_description_pkg/meshes/craw2.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="craw1">
+        <inertial>
+            <origin xyz="0.024441565369785926 -0.00913097522316754 -0.04158637789819494" rpy="1.232595164407831e-32 -0.0 0.0" />
+            <mass value="0.11972753556642697" />
+            <inertia ixx="0.00010894945703551932" iyy="0.00016130262606403123" izz="6.756987996610689e-05" ixy="1.230357730894895e-06" iyz="-8.22047073541567e-06" ixz="-6.21735722582825e-07" />
+        </inertial>
+        <visual name="craw1_visual">
+            <origin xyz="0.055278168123723326 -0.0054493529404387436 -0.08537684506545302" rpy="0.01900418331021532 -1.2189146982117131e-15 3.115880402394452" />
+            <geometry>
+                <mesh filename="package://mastering_ros_robot_description_pkg/meshes/craw1.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+        <collision name="craw1_collision">
+            <origin xyz="0.055278168123723326 -0.0054493529404387436 -0.08537684506545302" rpy="0.01900418331021532 -1.2189146982117131e-15 3.115880402394452" />
+            <geometry>
+                <mesh filename="package://mastering_ros_robot_description_pkg/meshes/craw1.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="craw_servo_arm_rotate" type="continuous">
+        <origin xyz="0.07370177203355258 0.027012106587672592 0.019108029521807915" rpy="-2.8896459498351077 -0.2604171595355777 1.5046253281659332" />
+        <parent link="craw_servo" />
+        <child link="arm_servo" />
+        <axis xyz="-0.26574348772883216 0.00048165418339958884 0.9640433183819926" />
+    </joint>
+    <joint name="craw_servo_craw_rotate1" type="revolute">
+        <origin xyz="-1.0063170474694516e-09 4.566794622462566e-09 -3.752514814436836e-09" rpy="-1.8136686922816558 0.0249579455409521 -1.576979267341957" />
+        <parent link="craw_servo" />
+        <child link="craw2" />
+        <axis xyz="-0.9996689999999999 0.02570899999999997 8.670746412531294e-19" />
+        <limit lower="-1.919862" upper="-0.785398" effort="1000000" velocity="1000000" />
+    </joint>
+    <joint name="craw_servo_craw_rotate2" type="revolute">
+        <origin xyz="0.00577000252251052 0.05099999607633027 0.02329607335334803" rpy="-1.8136686922816558 0.0249579455409521 -1.576979267341957" />
+        <parent link="craw_servo" />
+        <child link="craw1" />
+        <axis xyz="-0.9996689999999999 0.02570899999999997 1.2849089934402476e-16" />
+	<limit lower="0.261799" upper="1.396263" effort="1000000" velocity="1000000" />
+	<mimic joint="craw_servo_craw_rotate1" multiplier="-1" offset="-0.523599" />
+    </joint>
+</robot>

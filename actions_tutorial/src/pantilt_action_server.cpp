@@ -42,9 +42,13 @@
 #include <sstream>
 #include <sensor_msgs/JointState.h>
 
+#include "tarkbot_robot.h"
 
 const double degree2rad = M_PI/180;
 sensor_msgs::JointState joint_state;
+
+tarkbot_robot::JointCmd joint_cmd_data;
+double jointstate_list[2];
 
 class pantilt_actionAction
 {
@@ -92,12 +96,12 @@ public:
     if(goal->name=="pan")
     {
       jointnumber=0;
-      jointname = "pan_joint";
+      jointname = "craw_servo_craw_rotate1";
     }
     else
     {
       jointnumber=1;
-      jointname = "tilt_joint";
+      jointname = "craw_servo_arm_rotate";
     }
 
     //detrmine the motion direction
@@ -115,6 +119,7 @@ public:
       //update joint_state - moving one degree*scale
       joint_state.name[jointnumber] = jointname;
       joint_state.position[jointnumber] = currentvalue + sign * degree2rad * scale;
+      joint_cmd_data.joint_pos[jointnumber] = joint_state.position[jointnumber]; 
       currentvalue = joint_state.position[jointnumber];
 
        if(!as.isActive() || as.isPreemptRequested())
@@ -145,6 +150,14 @@ public:
   }
 };
 
+void joint_state_callback(const tarkbot_robot::JointState::ConstPtr& msg)
+{
+
+    jointstate_list[0] = (double)(msg->joint_pos[0]);
+    jointstate_list[1] = (double)(msg->joint_pos[1]);
+
+}
+
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "pantilt_action_server");
@@ -155,12 +168,20 @@ int main(int argc, char** argv)
   joint_state.name.resize(2);
   joint_state.position.resize(2);
   joint_state.header.stamp = ros::Time::now();
-  joint_state.name[0] ="pan_joint";
-  joint_state.position[0] = 0.0;
-  joint_state.name[1] ="tilt_joint";
-  joint_state.position[1] = 0.0;
+  joint_state.name[0] ="craw_servo_craw_rotate1";
+  joint_state.position[0] =  jointstate_list[0] - 0.3;
+  joint_state.name[1] ="craw_servo_arm_rotate";
+  joint_state.position[1] = jointstate_list[1];
 
   ros::Publisher joint_pub = nh.advertise<sensor_msgs::JointState>("joint_states", 1);
+
+  ros::Publisher joint_cmd_pub = nh.advertise<tarkbot_robot::JointCmd>("arm/arm_set", 1);
+  ros::Subscriber joint_state_sub = nh.subscribe<tarkbot_robot::JointState>("/arm/arm_state", 10, joint_state_callback);
+
+  joint_cmd_data.joint_num = 0;
+  joint_cmd_data.joint_pos.resize(2);
+  joint_cmd_data.joint_pos[0] = joint_state.position[0];
+  joint_cmd_data.joint_pos[1] = joint_state.position[1];
 
   ros::Rate loop_rate(30);//set equal to the loop_rate in the CB
   while (ros::ok())
@@ -168,6 +189,8 @@ int main(int argc, char** argv)
       //update joint_state time stamp - joint values changes in the CB
       joint_state.header.stamp = ros::Time::now();
       joint_pub.publish(joint_state);
+      //joint_cmd_data.header.stamp = ros::Time::now();
+      joint_cmd_pub.publish(joint_cmd_data);
       ros::spinOnce();
       loop_rate.sleep();
   }
